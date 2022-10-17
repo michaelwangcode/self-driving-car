@@ -1,6 +1,6 @@
 // Store the canvas from index.html and set its width
 const canvas = document.getElementById("myCanvas");
-canvas.width = 400;
+canvas.width = 200;
 
 // Create a context to draw on the canvas
 const ctx = canvas.getContext("2d");
