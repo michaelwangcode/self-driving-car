@@ -16,3 +16,17 @@ Using the arrow keys, a user is able to move the car forwards and backwards as w
 Speed, acceleration, max speed, friction and angle are properties of the Car class.
 
 The Controls class listens for when the arrow keys are pressed and released.
+
+
+## Part 2: Defining The Road
+
+In Part 2 of the project, the road is defined.
+
+The road consists of a border, lanes and dotted center lines.
+
+The Road class contains a number of properties used to draw the coordinates and dimensions of the road.
+
+Lastly, the animate function in the main class is updated so the car is centered on the screen as it drives.
+
+
+
