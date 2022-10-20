@@ -14,6 +14,7 @@ class Controls {
     this.#addKeyboardListeners();
   }
 
+  
   // The addKeyboardListeners method 
   // The '#' means the method is a private method
   #addKeyboardListeners() {
@@ -37,6 +38,7 @@ class Controls {
           break;
       }
     }
+
 
     // Perform actions when a key is released
     document.onkeyup = (event) => {

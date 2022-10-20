@@ -29,4 +29,14 @@ The Road class contains a number of properties used to draw the coordinates and 
 Lastly, the animate function in the main class is updated so the car is centered on the screen as it drives.
 
 
+## Part 3: Artificial Sensors
+
+In Part 3 of the project, the sensors for the car are defined.
+
+The sensors are a set of straight lines, called rays, that shoot out from the front of the car.
+
+The ray count, length and angles are adjustable.
+
+When a ray intersects with the border of the road, it changes colour to indicate there is contact.
+
 

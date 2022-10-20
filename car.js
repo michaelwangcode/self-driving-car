@@ -19,6 +19,9 @@ class Car {
     // Set the angle of the car
     this.angle = 0;
 
+    // Create a Sensor object (and pass the car as the argument)
+    this.sensor = new Sensor(this);
+
     // Initialize a Controls object
     this.controls = new Controls();
   }
@@ -26,10 +29,15 @@ class Car {
 
 
   // The update method performs actions based on the controls object
-  update() {
+  // Take the road borders as an argument
+  update(roadBorders) {
 
     // Call the move method to move the car
-    this.#move()
+    this.#move();
+
+    // Tell the sensor to update
+    // Pass the road borders as an argument
+    this.sensor.update(roadBorders);
   }
 
 
@@ -154,9 +162,11 @@ class Car {
 
     // Fill the canvas
     ctx.fill();
-
     
     // Restore the canvas
     ctx.restore(); 
+
+    // Draw the sensor
+    this.sensor.draw(ctx);
   }
 }

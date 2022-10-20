@@ -12,9 +12,6 @@ const road = new Road(canvas.width / 2, canvas.width * 0.9);
 // Use the getLaneCenter function to start the car in the center of a lane
 const car = new Car(road.getLaneCenter(1), 100, 30, 50);
 
-// Draw the car on the canvas
-car.draw(ctx);
-
 // Call the animate function to animate the car when it moves
 animate();
 
@@ -24,7 +21,8 @@ animate();
 function animate() {
 
   // Update the car's coordinates
-  car.update();
+  // Pass the road borders as an argument
+  car.update(road.borders);
 
   // Set the height of the canvas, which redraws the car without a trail
   canvas.height = window.innerHeight;
