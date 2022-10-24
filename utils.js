@@ -6,6 +6,7 @@ function lerp(A, B, t) {
 }
 
 
+
 // This function gets the intersection between two lines
 // If is used in sensor.js to find the intersection between a ray and the border
 function getIntersection(A,B,C,D){ 
@@ -28,4 +29,35 @@ function getIntersection(A,B,C,D){
   }
 
   return null;
+}
+
+
+
+// This function checks if two polygons intersect
+// It iterates through every segment of the first and second polygons and see if any intersect
+// It takes two polygon sets of points as arguments
+function polysIntersect(poly1, poly2) {
+
+  // Iterate through the first polygon points
+  for (let i = 0; i < poly1.length; i++) {
+
+    // Iterate through the second polygon points
+    for (let j = 0; j < poly2.length; j++) {
+
+      // Use the getIntersection function to see if there is an intersection between two lines (four points)
+      const touch = getIntersection (
+        poly1[i],
+        poly1[(i + 1) % poly1.length],
+        poly2[j],
+        poly2[(j + 1) % poly2.length]
+      )
+
+      // If an intersection exists,
+      if (touch) {
+
+        // Return true (the polygons intersect)
+        return true;
+      }
+    }
+  }
 }

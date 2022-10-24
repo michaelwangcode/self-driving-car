@@ -19,6 +19,9 @@ class Car {
     // Set the angle of the car
     this.angle = 0;
 
+    // Store whether the car is damaged or not
+    this.damaged = false;
+
     // Create a Sensor object (and pass the car as the argument)
     this.sensor = new Sensor(this);
 
@@ -32,12 +35,88 @@ class Car {
   // Take the road borders as an argument
   update(roadBorders) {
 
-    // Call the move method to move the car
-    this.#move();
+    // As long as the car is not damaged, allow it to move
+    if (!this.damaged) {
+
+      // Call the move method to move the car
+      this.#move();
+
+      // Add the four corners of the car
+      this.polygon = this.#createPolygon();
+
+      // Call the assessDamage function to see if the car is damaged
+      // It takes the roadBorders as an argument
+      this.damaged = this.#assessDamage(roadBorders);
+    }
 
     // Tell the sensor to update
     // Pass the road borders as an argument
     this.sensor.update(roadBorders);
+  }
+
+
+
+  // This function checks to see if the car is damaged
+  // A car gets damaged when it touches the side of the road (or another car)
+  #assessDamage(roadBorders) {
+
+    // Loop through the road borders
+    for (let i = 0; i < roadBorders.length; i++) {
+
+      // Use the polysIntersect function (in utils.js) 
+      // to see if there is an intersection between the car and the road borders
+      if (polysIntersect(this.polygon, roadBorders[i])) {
+
+        // If they intersect, return true for damage
+        return true;
+      }
+    }
+
+    // Otherwise, return false for not damaged
+    return false;
+  }
+
+
+
+  // This method keeps track of the coordinates of the car (the four corners)
+  // The '#' means the method is a private method
+  #createPolygon() {
+
+    // Store the points for the car (one for each corner)
+    const points = [];
+
+    // The radius is the distance from the center of the car to a corner
+    const rad = Math.hypot(this.width, this.height) / 2;
+
+    // Alpha is the angle between the radius and the line that splits the car in half vertically
+    const alpha = Math.atan2(this.width, this.height);
+
+    // Add the top right point of the car to the points array
+    points.push({
+      x: this.x - Math.sin(this.angle - alpha) * rad,
+      y: this.y - Math.cos(this.angle - alpha) * rad
+    });
+
+    // Add the top left point of the car to the points array
+    points.push({
+      x: this.x - Math.sin(this.angle + alpha) * rad,
+      y: this.y - Math.cos(this.angle + alpha) * rad
+    });
+
+    // Add the bottom right point of the car to the points array
+    points.push({
+      x: this.x - Math.sin(Math.PI + this.angle - alpha) * rad,
+      y: this.y - Math.cos(Math.PI + this.angle - alpha) * rad
+    });
+
+    // Add the bottom left point of the car to the points array
+    points.push({
+      x: this.x - Math.sin(Math.PI + this.angle + alpha) * rad,
+      y: this.y - Math.cos(Math.PI + this.angle + alpha) * rad
+    });
+
+    // Return the points array
+    return points;
   }
 
 
@@ -138,33 +217,34 @@ class Car {
   // It takes a canvas as an argument
   draw(ctx) {
     
-    // Save the default state of the canvas
-    ctx.save();
+    // If the car is damaged,
+    if (this.damaged) {
 
-    // Add a translation transformation
-    ctx.translate(this.x, this.y);
+      // Make it gray
+      ctx.fillStyle = "gray";
 
-    // Rotate the car by a specified angle
-    ctx.rotate(-this.angle);
-    
+    // If the car is not damaged,
+    } else {
+
+      // Make it black
+      ctx.fillStyle = "black";
+    }
 
     // Start a new path
     ctx.beginPath();
-    
-    // Draw the car as a rectangle
-    // The x and y values are in the center of the car
-    ctx.rect(
-      -this.width / 2,
-      -this.height / 2,
-      this.width,
-      this.height
-    );
 
-    // Fill the canvas
+    // Move to the first point in the car polygon
+    ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
+
+    // Loop through the 3 remaining points of the car
+    for (let i = 1; i < this.polygon.length; i++) {
+
+      // Draw a line to the ith polygon
+      ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
+    }
+
+    // Fill the car polygon
     ctx.fill();
-    
-    // Restore the canvas
-    ctx.restore(); 
 
     // Draw the sensor
     this.sensor.draw(ctx);
