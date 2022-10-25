@@ -25,9 +25,9 @@ class Sensor {
 
 
 
-  // The update method
-  // Take the road borders as an argument 
-  update(roadBorders) {
+  // The update method for the sensor
+  // Take the road borders and traffic as an argument 
+  update(roadBorders, traffic) {
 
     // Call the castRays method to calculate the sensor rays
     this.#castRays();
@@ -39,14 +39,14 @@ class Sensor {
     for (let i = 0; i < this.rays.length; i++) {
 
       // Use the getReading method to add a reading value to the readings array
-      this.readings.push(this.#getReading(this.rays[i], roadBorders));
+      this.readings.push(this.#getReading(this.rays[i], roadBorders, traffic));
     }
   }
 
 
 
-  // This method calculates whether the ray touches any road border
-  #getReading(ray, roadBorders) {
+  // This method calculates whether the ray touches any road border or traffic
+  #getReading(ray, roadBorders, traffic) {
 
     // Create a touches array to store every time the ray touches the road
     let touches = [];
@@ -70,6 +70,35 @@ class Sensor {
         touches.push(touch);
       }
     }
+
+    
+    // Iterate through all of the traffic cars
+    for (let i = 0; i < traffic.length; i++) {
+
+      // Store the polygon for the traffic car
+      const poly = traffic[i].polygon;
+
+      // Iterate through all of the points in the traffic car polygon
+      for (let j = 0; j < poly.length; j++) {
+
+        // Use the getIntersection function to determine if the ray and traffic car touch
+        // The function is located in (utils.js)
+        const value = getIntersection(
+          ray[0], 
+          ray[1], 
+          poly[j],
+          poly[(j + 1) % poly.length]
+        );
+
+        // If there is a value,
+        if (value) {
+
+          // Add the value to the touches array
+          touches.push(value);
+        }
+      }
+    }
+    
 
     // If the touches array has no touches,
     if (touches.length == 0) {

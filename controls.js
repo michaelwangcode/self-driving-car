@@ -2,7 +2,7 @@
 class Controls {
 
   // The constructor for creating a Controls object
-  constructor() {
+  constructor(type) {
 
     // The Controls object has four direction attributes (initially set to false)
     this.forward = false;
@@ -10,8 +10,23 @@ class Controls {
     this.right = false;
     this.reverse = false;
 
-    // The keyboard listener checks when a key is pressed
-    this.#addKeyboardListeners();
+    // Set controls based on the type of car (driveable vs traffic)
+    switch(type) {
+
+      // If the car is driveable,
+      case "KEYS":
+
+        // Add a keyboard listener, which checks when a key is pressed
+        this.#addKeyboardListeners();
+        break;
+      
+      // If the car is a traffic (dummy) car,
+      case "DUMMY":
+
+        // Keep moving the car forward
+        this.forward = true;
+        break;
+    }
   }
 
   

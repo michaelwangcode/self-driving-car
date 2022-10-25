@@ -56,3 +56,18 @@ A function is used to constantly calculate if any line of the car intersects wit
 
 When the car is damaged, it turns grey and is unable to move.
 
+
+
+
+## Part 5: Simulating Traffic
+
+In Part 5 of the project, we simulate traffic by adding an additional car to the road.
+
+The traffic automatically drives forward at a slower speed than our car.
+
+The sensors for our car are updated to detect traffic.
+
+If our car collides with traffic, it becomes damaged and is unable to move.
+
+Our car is now blue and traffic is made red to improve visibility.
+

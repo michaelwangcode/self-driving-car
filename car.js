@@ -2,7 +2,9 @@
 class Car {
 
   // The constructor for creating a Car object
-  constructor(x, y, width, height) {
+  // The control type indicates whether the car is driveable or traffic (dummy)
+  // The default max speed is 3, but it can be changed for dummy cars
+  constructor(x, y, width, height, controlType, maxSpeed = 3) {
 
     // Set the coordinates and dimensions of the car
     this.x = x;
@@ -13,7 +15,7 @@ class Car {
     // Set the speed, acceleration, max speed and friction for the car
     this.speed = 0;
     this.acceleration = 0.2;
-    this.maxSpeed = 3;
+    this.maxSpeed = maxSpeed;
     this.friction = 0.05;
 
     // Set the angle of the car
@@ -22,18 +24,22 @@ class Car {
     // Store whether the car is damaged or not
     this.damaged = false;
 
-    // Create a Sensor object (and pass the car as the argument)
-    this.sensor = new Sensor(this);
+    // If the car is a NOT a traffic (dummy) car,
+    if (controlType != "DUMMY") {
+
+      // Create a Sensor object (and pass the car as the argument)
+      this.sensor = new Sensor(this);
+    }
 
     // Initialize a Controls object
-    this.controls = new Controls();
+    this.controls = new Controls(controlType);
   }
 
 
 
   // The update method performs actions based on the controls object
-  // Take the road borders as an argument
-  update(roadBorders) {
+  // It takes the road borders and traffic as an argument
+  update(roadBorders, traffic) {
 
     // As long as the car is not damaged, allow it to move
     if (!this.damaged) {
@@ -45,20 +51,24 @@ class Car {
       this.polygon = this.#createPolygon();
 
       // Call the assessDamage function to see if the car is damaged
-      // It takes the roadBorders as an argument
-      this.damaged = this.#assessDamage(roadBorders);
+      // It takes the roadBorders and traffic as an argument
+      this.damaged = this.#assessDamage(roadBorders, traffic);
     }
 
-    // Tell the sensor to update
-    // Pass the road borders as an argument
-    this.sensor.update(roadBorders);
+    // If the sensor exists,
+    if (this.sensor) {
+
+      // Tell the sensor to update
+      // Pass the road borders and traffic as an argument
+      this.sensor.update(roadBorders, traffic);
+    }
   }
 
 
 
   // This function checks to see if the car is damaged
-  // A car gets damaged when it touches the side of the road (or another car)
-  #assessDamage(roadBorders) {
+  // A car gets damaged when it touches the side of the road or a car in traffic
+  #assessDamage(roadBorders, traffic) {
 
     // Loop through the road borders
     for (let i = 0; i < roadBorders.length; i++) {
@@ -66,6 +76,18 @@ class Car {
       // Use the polysIntersect function (in utils.js) 
       // to see if there is an intersection between the car and the road borders
       if (polysIntersect(this.polygon, roadBorders[i])) {
+
+        // If they intersect, return true for damage
+        return true;
+      }
+    }
+
+    // Loop through the cars in traffic
+    for (let i = 0; i < traffic.length; i++) {
+
+      // Use the polysIntersect function (in utils.js) 
+      // to see if there is an intersection between the car and the traffic car
+      if (polysIntersect(this.polygon, traffic[i].polygon)) {
 
         // If they intersect, return true for damage
         return true;
@@ -214,8 +236,8 @@ class Car {
 
 
   // This method draws a car as a basic rectangle
-  // It takes a canvas as an argument
-  draw(ctx) {
+  // It takes a canvas and color as an argument
+  draw(ctx, color) {
     
     // If the car is damaged,
     if (this.damaged) {
@@ -226,8 +248,8 @@ class Car {
     // If the car is not damaged,
     } else {
 
-      // Make it black
-      ctx.fillStyle = "black";
+      // Make it the given color
+      ctx.fillStyle = color;
     }
 
     // Start a new path
@@ -246,7 +268,11 @@ class Car {
     // Fill the car polygon
     ctx.fill();
 
-    // Draw the sensor
-    this.sensor.draw(ctx);
+    // If the sensor exists.
+    if (this.sensor) {
+
+      // Draw the sensor
+      this.sensor.draw(ctx);
+    }
   }
 }
