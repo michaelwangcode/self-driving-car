@@ -11,7 +11,7 @@ class Sensor {
 
     // Set the ray count, length and spread (angles)
     this.rayCount = 5;
-    this.rayLength = 100;
+    this.rayLength = 150;
     this.raySpread = Math.PI / 2;
 
     // Create an array to hold the rays

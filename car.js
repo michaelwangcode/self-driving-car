@@ -24,11 +24,23 @@ class Car {
     // Store whether the car is damaged or not
     this.damaged = false;
 
+    // Set useBrain to true if the control type is AI
+    this.useBrain = controlType == "AI";
+
+
     // If the car is a NOT a traffic (dummy) car,
     if (controlType != "DUMMY") {
 
       // Create a Sensor object (and pass the car as the argument)
       this.sensor = new Sensor(this);
+
+      //----- ADD NEURAL NETWORK -----//
+
+      // Create a brain attribute to store the Neural Network object
+      // The input layer has 5 neurons (rayCount)
+      // The hidden (middle) layer has 6 neurons
+      // The output layer has 4 neurons, one for each direction (forwards, backwards, left, right)
+      this.brain = new NeuralNetwork([this.sensor.rayCount, 6, 4]);
     }
 
     // Initialize a Controls object
@@ -61,6 +73,33 @@ class Car {
       // Tell the sensor to update
       // Pass the road borders and traffic as an argument
       this.sensor.update(roadBorders, traffic);
+
+
+      //----- NEURAL NETWORK CONTROLS FOR CAR -----//
+      
+      // Remove the offsets from the sensor readings
+      const offsets = this.sensor.readings.map(
+
+        // If the sensor is null return 0
+        // Otherwise, subtract the sensor offset from 1
+        // The neuron will recieve low values for objects far away and high values for close objects
+        s => s == null ? 0 : 1 - s.offset
+      );
+
+      // Store the outputs using a Neural Network
+      // The outputs array contains 4 values, 
+      const outputs = NeuralNetwork.feedForward(offsets, this.brain);
+
+      // If the brain is being used,
+      if (this.useBrain) {
+
+        // Set the forward, left, right, and reverse values using the outputs array
+        // This will move the car automatically
+        this.controls.forward = outputs[0];
+        this.controls.left = outputs[1];
+        this.controls.right = outputs[2];
+        this.controls.reverse = outputs[3];
+      }
     }
   }
 

@@ -71,3 +71,24 @@ If our car collides with traffic, it becomes damaged and is unable to move.
 
 Our car is now blue and traffic is made red to improve visibility.
 
+
+
+
+## Part 6: Neural Network
+
+In Part 6 of the project, we add a neural network for the car.
+
+Neurons on the 1st layer (input layer) will be connected to the car sensors.
+
+Neurons on the 2nd layer (hidden layer) transform the inputs to produce outputs.
+
+Neurons on the 3rd layer (output layer) will be connected to the car controls.
+
+Weights represent the connection between two neurons and are randomly generated.
+
+The output is an array of four numbers that tell the car to go forwards, backwards, left and right.
+
+When the car's sensors touch traffic, the car will slow down to avoid a collision.
+
+Lastly, a visualizer is added to display the neural network beside the road.
+

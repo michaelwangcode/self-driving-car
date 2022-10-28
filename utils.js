@@ -60,4 +60,19 @@ function polysIntersect(poly1, poly2) {
       }
     }
   }
+
+  // Otherwise return false
+  return false;
+}
+
+
+
+// The getRGBA is used in the Visualizer class
+function getRGBA(value){
+  
+  const alpha=Math.abs(value);
+  const R=value<0?0:255;
+  const G=R;
+  const B=value>0?0:255;
+  return "rgba("+R+","+G+","+B+","+alpha+")";
 }
