@@ -67,12 +67,16 @@ const traffic = [
   // Create a traffic car object in lane 2
   new Car(road.getLaneCenter(2), -300, 30, 50, "DUMMY", 2),
 
+  // Create a traffic car object in lane 0
   new Car(road.getLaneCenter(0), -500, 30, 50, "DUMMY", 2),
 
+  // Create a traffic car object in lane 1
   new Car(road.getLaneCenter(1), -500, 30, 50, "DUMMY", 2),
 
+  // Create a traffic car object in lane 1
   new Car(road.getLaneCenter(1), -700, 30, 50, "DUMMY", 2),
 
+  // Create a traffic car object in lane 2
   new Car(road.getLaneCenter(2), -700, 30, 50, "DUMMY", 2)
 ];
 
