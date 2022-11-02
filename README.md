@@ -6,6 +6,8 @@ This Javascript project uses a neural network to simulate a self driving car wit
 
 The tutorial for this project can be located [here](https://www.youtube.com/watch?v=Rs_rAxEsAvI).
 
+!["Screenshot"](https://raw.githubusercontent.com/michaelwangcode/self-driving-car/master/screenshot.png)
+
 
 
 ## Part 1: Car Driving Mechanics
