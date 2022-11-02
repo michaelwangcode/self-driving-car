@@ -36,6 +36,36 @@ class NeuralNetwork {
     // Return the outputs array
     return outputs;
   }
+
+
+
+  // The mutate function mutates a network by a given amount
+  // An amount of 1 means 100% (completely random)
+  // An amount of 0.1 or 10% gives you a slight mutation (close to original)
+  static mutate(network, amount = 1) {
+
+    // Iterate through all of the levels of the network
+    network.levels.forEach(level => {
+
+      // Iterate through all of the biases
+      for (let i = 0; i < level.biases.length; i++) {
+
+        // Set the ith bias using the linear interpolation function
+        level.biases[i] = lerp(level.biases[i], Math.random() * 2 - 1, amount);
+      }
+
+      // Iterate through all of the weights (output neurons)
+      for(let i = 0; i < level.weights.length; i++){
+        
+        // Iterate through all of the weights (input neurons)
+        for(let j = 0; j < level.weights[i].length; j++){
+
+          // Set the weight at i,j using the linear interpolation function
+          level.weights[i][j] = lerp(level.weights[i][j], Math.random() * 2 - 1,amount);
+        }
+      }
+    });
+  }
 }
 
 

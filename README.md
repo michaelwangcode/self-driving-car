@@ -58,7 +58,6 @@ When the car is damaged, it turns grey and is unable to move.
 
 
 
-
 ## Part 5: Simulating Traffic
 
 In Part 5 of the project, we simulate traffic by adding an additional car to the road.
@@ -70,7 +69,6 @@ The sensors for our car are updated to detect traffic.
 If our car collides with traffic, it becomes damaged and is unable to move.
 
 Our car is now blue and traffic is made red to improve visibility.
-
 
 
 
@@ -94,7 +92,6 @@ Lastly, a visualizer is added to display the neural network beside the road.
 
 
 
-
 ## Part 7: Parallelization
 
 In Part 7 of the project, we will run many car simulations in parallel.
@@ -106,3 +103,37 @@ All other cars have their sensors removed and transparency increased.
 A save button is added to save the car in local storage.
 
 Lastly, two additional cars are added on the road as traffic.
+
+
+
+## Part 8: Genetic Algorithm
+
+In the final part of the project, we will add a mutate function for the car.
+
+A decimal value from 0 to 1 determines how different a mutated car behaves from the original.
+
+A value of 1 means the mutated car is completely different while a value of 0.1 means the mutated car is very similar.
+
+When we save a car in local storage and refresh the program, the saved car will mutate.
+
+This will increase the chances that there will be a car that makes it through all of the traffic.
+
+To increase the chances of finding a successful car, we can increase the number of simulated cars from 100 to 1000.
+
+
+
+## Running The Program
+
+Open the index.html file in a Google Chrome window.
+
+To run the program efficiently, set the number of cars to 1000 and set the mutation amount to around 0.2 (in main.js).
+
+Every time a simulated car makes it past a traffic car without crashing, click the save icon to save the car's progress.
+
+When you refresh and rerun the program, new cars will mutate from the last saved location.
+
+Repeat the process when a mutated car makes it past the next set of traffic.
+
+It will usually take multiple attempts to get a successful car.
+
+To reset the simulation, click the discard button and refresh the program.

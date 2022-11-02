@@ -34,8 +34,20 @@ let bestCar = cars[0];
 // If there is a best brain stored in local storage,
 if (localStorage.getItem("bestBrain")) {
 
-  // Set the brain of the best car to the best brain
-  bestCar.brain = JSON.parse(localStorage.getItem("bestBrain"));
+  // Iterate through all of the cars
+  for (let i = 0; i < cars.length; i++) {
+
+    // Set the car brain to the brain in local storage
+    cars[i].brain = JSON.parse(localStorage.getItem("bestBrain"));
+
+    // If it is not the first car,
+    if (i != 0) {
+
+      // Mutate the car
+      // The decimal parameter indicates how much the mutation differs from the original
+      NeuralNetwork.mutate(cars[i].brain, 0.2);
+    }
+  }
 }
 
 
@@ -53,7 +65,15 @@ const traffic = [
   new Car(road.getLaneCenter(0), -300, 30, 50, "DUMMY", 2),
 
   // Create a traffic car object in lane 2
-  new Car(road.getLaneCenter(2), -300, 30, 50, "DUMMY", 2)
+  new Car(road.getLaneCenter(2), -300, 30, 50, "DUMMY", 2),
+
+  new Car(road.getLaneCenter(0), -500, 30, 50, "DUMMY", 2),
+
+  new Car(road.getLaneCenter(1), -500, 30, 50, "DUMMY", 2),
+
+  new Car(road.getLaneCenter(1), -700, 30, 50, "DUMMY", 2),
+
+  new Car(road.getLaneCenter(2), -700, 30, 50, "DUMMY", 2)
 ];
 
 
