@@ -275,8 +275,9 @@ class Car {
 
 
   // This method draws a car as a basic rectangle
-  // It takes a canvas and color as an argument
-  draw(ctx, color) {
+  // It takes a canvas, color and drawSensor as an argument
+  // By default, no sensors are drawn
+  draw(ctx, color, drawSensor = false) {
     
     // If the car is damaged,
     if (this.damaged) {
@@ -307,8 +308,8 @@ class Car {
     // Fill the car polygon
     ctx.fill();
 
-    // If the sensor exists.
-    if (this.sensor) {
+    // If the sensor exists and drawSensor is true,
+    if (this.sensor && drawSensor) {
 
       // Draw the sensor
       this.sensor.draw(ctx);

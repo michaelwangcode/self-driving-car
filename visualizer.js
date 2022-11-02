@@ -25,7 +25,7 @@ class Visualizer{
               left,levelTop,
               width,levelHeight,
               i==network.levels.length-1
-                  ?['⬆','⬇','⬅','➡']
+                  ?['⬆','⬅','➡','⬇']
                   :[]
           );
       }

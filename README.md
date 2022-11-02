@@ -92,3 +92,17 @@ When the car's sensors touch traffic, the car will slow down to avoid a collisio
 
 Lastly, a visualizer is added to display the neural network beside the road.
 
+
+
+
+## Part 7: Parallelization
+
+In Part 7 of the project, we will run many car simulations in parallel.
+
+We track the "best" car, which is the car with the smallest y-value that has moved the furthest up the road.
+
+All other cars have their sensors removed and transparency increased.
+
+A save button is added to save the car in local storage.
+
+Lastly, two additional cars are added on the road as traffic.
